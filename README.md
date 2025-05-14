@@ -6,7 +6,7 @@ Une application CRM (Customer Relationship Management) simple permettant de gér
 
 - **Frontend :** [Nuxt 3](https://nuxt.com/) (Vue 3 + Composition API)
 - **Style :** [Tailwind CSS](https://tailwindcss.com/)
-- **Backend :** API REST (par exemple Express.js, AdonisJS ou autre)
+- **Backend :** API REST [NestJS](https://nestjs.com/)
 - **Base de données :** MySQL
 
 ---
@@ -16,14 +16,14 @@ Une application CRM (Customer Relationship Management) simple permettant de gér
 ### 1. Cloner le projet
 
 ```bash
-git clone https://github.com/ton-utilisateur/ton-projet-crm.git
-cd ton-projet-crm
+git clone https://github.com/NicolasHerissard/CRM-Nuxt-Nest.git
+cd CRM-Nuxt-Nest
 
 # Installer les dépendances
 npm install
 ```
 
-# 🚀 Démarrer le projet
+### 2. Démarrer le projet
 ```bash
 npm run dev
 ```
