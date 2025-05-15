@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { Clients } from './clients.entity';
 
@@ -25,5 +25,17 @@ export class ClientsController {
     @HttpCode(200)
     async countClients(): Promise<number> {
         return this.clientsService.countClients();
+    }
+
+    @Get('search')
+    @HttpCode(200)
+    async findClientByName(@Query('name') name: string) {
+        return this.clientsService.findClientByName(name);
+    }
+
+    @Get('status')
+    @HttpCode(200)
+    async findClientByStatus(@Query('status') status: string) {
+        return this.clientsService.findClientByStatus(status);
     }
 }

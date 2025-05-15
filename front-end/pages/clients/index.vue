@@ -18,7 +18,20 @@
         })
     })
 
-    
+    const searchClient = ref('');
+
+    async function HandleSearchClients() {
+        const url = searchClient.value
+            ? `http://localhost:3001/clients/search?name=${searchClient.value}`
+            : 'http://localhost:3001/clients';
+        
+        console.log('URL:', url);
+        const { data } = await useFetch<Client[]>(url);
+
+        if(data.value) {
+            clients.value = data.value;
+        }
+    }
 </script>
 
 <template>
@@ -56,7 +69,7 @@
                     <button class="btn-ajouts bg-blue-500 text-white px-4 py-2 rounded-sm shadow hover:bg-blue-600 transition duration-200">
                         Ajouter un client
                     </button>
-                    <input class="border border-gray-200 rounded-lg px-2 py-1" type="text" placeholder="Rechercher un client" />
+                    <input v-model="searchClient" @input="HandleSearchClients()" class="border border-gray-200 rounded-lg px-2 py-1" type="text" placeholder="Rechercher un client" />
                 </div>
             </div>
             <div class="overflow-x-auto mt-5 p-5">

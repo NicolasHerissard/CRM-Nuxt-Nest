@@ -22,4 +22,16 @@ export class ClientsService {
     public async countClients(): Promise<number> {
         return await this.clientsRepository.count();
     }
+
+    public async findClientByName(name: string): Promise<Clients[]> {
+        return await this.clientsRepository.createQueryBuilder('clients')
+            .where('clients.name LIKE :name', { name: `%${name}%` })
+            .getMany();
+    }
+
+    public async findClientByStatus(status: string): Promise<Clients[]> {
+        return await this.clientsRepository.createQueryBuilder('clients')
+            .where('clients.status = :status', { status })
+            .getMany();
+    }
 }
