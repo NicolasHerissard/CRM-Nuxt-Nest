@@ -29,8 +29,14 @@ export class ClientsController {
 
     @Get('search')
     @HttpCode(200)
-    async findClientByName(@Query('name') name: string) {
-        return this.clientsService.findClientByName(name);
+    async findClientByName(@Query('name') name: string, @Query('status') status: string) {
+        if (!name) {
+            return this.clientsService.findAll();
+        }
+
+        name = name.replace('%', '');
+
+        return this.clientsService.findClientByName(name, status);
     }
 
     @Get('status')

@@ -23,9 +23,9 @@ export class ClientsService {
         return await this.clientsRepository.count();
     }
 
-    public async findClientByName(name: string): Promise<Clients[]> {
+    public async findClientByName(name: string, status: string): Promise<Clients[]> {
         return await this.clientsRepository.createQueryBuilder('clients')
-            .where('clients.name LIKE :name', { name: `%${name}%` })
+            .where('clients.name LIKE :name AND clients.status = :status', { name: `%${name}%`, status: status })
             .getMany();
     }
 

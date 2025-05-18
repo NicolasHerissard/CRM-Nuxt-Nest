@@ -10,3 +10,14 @@ export interface Client {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface Article {
+  id: number;
+  name: string;
+  description: string;
+  priceHT: number;
+  tva: number;
+  priceTTC: number;
+  created_at?: string;
+  updated_at?: string;
+}
