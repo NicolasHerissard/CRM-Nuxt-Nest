@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ArticlesClients } from 'src/articles-clients/articles-clients.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Articles {
@@ -31,4 +32,7 @@ export class Articles {
         onUpdate: 'CURRENT_TIMESTAMP' 
     })
     updated_at: Date;
+
+    @OneToMany(() => ArticlesClients, (articlesClients) => articlesClients.article)
+    articlesClients: ArticlesClients[];
 }
