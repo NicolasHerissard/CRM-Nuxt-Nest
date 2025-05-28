@@ -21,3 +21,22 @@ export interface Article {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface Appointments {
+  id?: number;
+  title: string;
+  start: Date;
+  end: Date;
+  clientId: number;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export interface User {
+  id?: number;
+  username: string;
+  password: string;
+  email: string;
+  created_at?: Date;
+  updated_at?: Date;
+}

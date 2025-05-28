@@ -4,7 +4,7 @@ let items = [
     { name: 'Dashboard', path: '/' },
     { name: 'Clients', path: '/clients' },
     { name: 'Articles', path: '/articles' },
-    { name: 'Factures / Devis', path: '/factures' },
+    { name: 'Factures / Devis', path: '/devis-factures' },
     { name: 'Tâches / Activités', path: '/taches' },
     { name: 'Ventes', path: '/ventes' },
 ]

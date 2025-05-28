@@ -14,6 +14,9 @@ export class ArticlesClients {
   @ManyToOne(() => Articles, (article) => article.articlesClients, { onDelete: 'CASCADE' })
     article: Articles;
 
+    @Column({ type: 'int', default: 0 })
+    quantity: number;
+
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
 

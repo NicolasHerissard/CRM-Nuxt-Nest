@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Appointments } from 'src/appointments/appointments.entity';
 import { ArticlesClients } from 'src/articles-clients/articles-clients.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -44,4 +45,7 @@ export class Clients {
 
   @OneToMany(() => ArticlesClients, (articlesClients) => articlesClients.client)
   clientArticles: ArticlesClients[];
+
+  @OneToMany(() => Appointments, (appointment) => appointment.client)
+  appointments: Appointments[];
 }
