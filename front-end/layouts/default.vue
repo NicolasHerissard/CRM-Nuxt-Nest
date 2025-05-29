@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="flex p-5 space-x-10 relative min-h-screen bg-gradient-to-r from-gray-50 to-gray-200"> 
+    <div class="flex p-5 space-x-10 relative min-h-screen bg-gradient-to-b from-green-300 to-green-800"> 
         <div class="">
             <Sidebar />
         </div>

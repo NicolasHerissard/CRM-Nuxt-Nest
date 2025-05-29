@@ -25,12 +25,12 @@ export class AuthController {
         const user = await this.authService.login(body.username, body.password);
 
         const payload = { username: user.username, id: user.id };
-        const token = this.jwtService.sign(payload, { expiresIn: '1h' });
+        const token = this.jwtService.sign(payload, { expiresIn: '30m' });
 
         res.cookie('auth_token', token, {
             httpOnly: true,
             sameSite: 'strict',
-            maxAge: 1000,
+            maxAge: 30 * 60 * 1000, // 30min
             secure: true,
         })
 
@@ -39,7 +39,16 @@ export class AuthController {
 
     @Get('cookie')
     @UseGuards(JwtAuthGuard)
-    async getCookie(@Req() req: any) {
-        return req.user;
+    async getCookie(@Req() req: any, @Res({ passthrough: true }) res: any) {
+        const payload = { username: req.user.username, id: req.user.id }
+        const newToken = this.jwtService.sign(payload, { expiresIn: '30m' })
+
+        res.cookie('auth_token', newToken, {
+            httpOnly: true,
+            maxAge: 30 * 60 * 1000, // 30min
+            sameSite: 'lax',
+        })
+
+        return req.user
     }
 }

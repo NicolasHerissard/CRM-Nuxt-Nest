@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { User } from '~/models'
+import { useAuthUser } from "#imports"
 
 definePageMeta({
   layout: 'auth',
@@ -9,6 +10,8 @@ definePageMeta({
 const username = ref('')
 const password = ref('')
 const error = ref('')
+
+const { setUser } = useAuthUser()
 
 async function login() {
     try {
@@ -23,6 +26,7 @@ async function login() {
 
         if(user) {
             // Redirection après connexion réussie
+            setUser(user)
             navigateTo('/')
         } else {
             // Gérer l'erreur de connexion

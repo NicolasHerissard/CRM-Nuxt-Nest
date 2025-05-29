@@ -7,6 +7,7 @@ export interface Client {
   address?: string;
   comments?: string;
   status: string;
+  authsId?: number;
   created_at?: string;
   updated_at?: string;
 }

@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Appointments } from 'src/appointments/appointments.entity';
 import { ArticlesClients } from 'src/articles-clients/articles-clients.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Auth } from 'src/auth/auth.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Clients {
@@ -48,4 +49,7 @@ export class Clients {
 
   @OneToMany(() => Appointments, (appointment) => appointment.client)
   appointments: Appointments[];
+
+  @ManyToOne(() => Auth, (auth) => auth.client)
+  auths: Auth;
 }

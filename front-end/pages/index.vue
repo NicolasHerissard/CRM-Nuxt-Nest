@@ -1,6 +1,8 @@
-<script setup>
+<script setup lang="ts">
 
+import { useAuthUser } from "#imports"
 
+const { user } = useAuthUser()
 
 </script>
 

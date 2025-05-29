@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import type { Client } from '~/models';
+import { useAuthUser } from "#imports";
+
+const { user } = useAuthUser();
 
 onMounted(() => {
     const btnClose = document.querySelector('.btn-close');
@@ -19,6 +22,7 @@ const formClient = ref<Client>({
     address: '',
     comments: '',
     status: '',
+    authsId: user.value?.id
 })
 
 async function AddClient() {

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       link: [],
+      title: 'CRM',
       script: [
         {
           src: 'https://kit.fontawesome.com/6a69cfa461.js',
