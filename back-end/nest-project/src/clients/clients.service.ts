@@ -55,4 +55,19 @@ export class ClientsService {
             .where('clients.status = :status', { status })
             .getMany();
     }
+
+    public async getCountByStatusAndAuthsId(status: string, authsId: number): Promise<number> {
+        const count = await this.clientsRepository.count({where: {status, auths: {id: authsId}}});
+        return count;
+    }
+
+    public async getCountByMonthAndAuthsId(month: string, authsId: number): Promise<number> {
+        const count = await this.clientsRepository.createQueryBuilder('clients')
+            .select('COUNT(clients.id) as count')
+            .leftJoin('clients.auths', 'auths')
+            .where('MONTH(clients.created_at) = :month AND clients.auths.id = :authsId', { month, authsId })
+            .getCount();
+        
+        return count;
+    }
 }

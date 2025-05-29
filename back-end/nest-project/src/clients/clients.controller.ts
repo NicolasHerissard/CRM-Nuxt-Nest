@@ -45,4 +45,16 @@ export class ClientsController {
     async findClientByStatus(@Query('status') status: string) {
         return this.clientsService.findClientByStatus(status);
     }
+
+    @Get('status/count')
+    @HttpCode(200)
+    async getPourcentageByStatus(@Query('status') status: string, @Query('authsId') authsId: number) {
+        return this.clientsService.getCountByStatusAndAuthsId(status, authsId);
+    }
+
+    @Get('month/count')
+    @HttpCode(200)
+    async getCountByMonth(@Query('month') month: string, @Query('authsId') authsId: number) {
+        return this.clientsService.getCountByMonthAndAuthsId(month, authsId);
+    }
 }
