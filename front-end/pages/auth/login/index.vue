@@ -15,7 +15,8 @@ const { setUser } = useAuthUser()
 
 async function login() {
     try {
-        const user = await $fetch<User>('http://localhost:3001/auth/login', {
+        const apiurl = useRuntimeConfig().public.apiUrl
+        const user = await $fetch<User>(`${apiurl}/auth/login`, {
             method: 'POST',
             body: {
                 username: username.value,

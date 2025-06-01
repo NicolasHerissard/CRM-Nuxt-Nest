@@ -6,11 +6,12 @@ import { useAuthUser } from "#imports"
 const { user } = useAuthUser()
 const chartStatus = ref<HTMLCanvasElement | null>(null)
 const chartMonth = ref<HTMLCanvasElement | null>(null)
+const apiurl = useRuntimeConfig().public.apiUrl
 
-const { data: countByNouveau } = await useFetch<number>(`http://localhost:3001/clients/status/count?status=Nouveau&authsId=${user.value?.id}`)
-const { data: countByEnCours } = await useFetch<number>(`http://localhost:3001/clients/status/count?status=En cours&authsId=${user.value?.id}`)
-const { data: countByPerdu } = await useFetch<number>(`http://localhost:3001/clients/status/count?status=Perdu&authsId=${user.value?.id}`)
-const { data:countByGagne } = await useFetch<number>(`http://localhost:3001/clients/status/count?status=Gagné&authsId=${user.value?.id}`)
+const { data: countByNouveau } = await useFetch<number>(`${apiurl}/clients/status/count?status=Nouveau&authsId=${user.value?.id}`)
+const { data: countByEnCours } = await useFetch<number>(`${apiurl}/clients/status/count?status=En cours&authsId=${user.value?.id}`)
+const { data: countByPerdu } = await useFetch<number>(`${apiurl}/clients/status/count?status=Perdu&authsId=${user.value?.id}`)
+const { data:countByGagne } = await useFetch<number>(`${apiurl}/clients/status/count?status=Gagné&authsId=${user.value?.id}`)
 const data = [
   { status: "Nouveau", count: countByNouveau },
   { status: "En cours", count: countByEnCours },
@@ -22,7 +23,7 @@ const totalMonth = ref(12)
 const dataMonth = ref<number[]>([])
 
 for (let i = 1; i < totalMonth.value; i++) {
-    const { data: countByMonth } = await useFetch<number>(`http://localhost:3001/clients/month/count?month=${i}&authsId=${user.value?.id}`)
+    const { data: countByMonth } = await useFetch<number>(`${apiurl}/clients/month/count?month=${i}&authsId=${user.value?.id}`)
     dataMonth.value.push(countByMonth.value ?? 0)
 }
 

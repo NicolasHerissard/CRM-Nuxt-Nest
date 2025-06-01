@@ -5,12 +5,13 @@
     import { useAuthUser } from "#imports";
     
     const { user } = useAuthUser();
+    const apiurl = useRuntimeConfig().public.apiUrl
     console.log(user.value?.id)
-    const { data: clients } = await useFetch<Client[]>('http://localhost:3001/clients?authsId=' + user.value?.id, {
+    const { data: clients } = await useFetch<Client[]>(`${apiurl}/clients?authsId=` + user.value?.id, {
         method: 'GET',
     });
 
-    const { data: countClients } = await useFetch<number>('http://localhost:3001/clients/count?authsId=' + user.value?.id, {
+    const { data: countClients } = await useFetch<number>(`${apiurl}/clients/count?authsId=` + user.value?.id, {
         method: 'GET',
     });
 
@@ -31,8 +32,8 @@
 
     async function HandleSearchClients() {
         const url = searchClient.value
-            ? `http://localhost:3001/clients/search?name=${searchClient.value}`
-            : 'http://localhost:3001/clients?authsId=' + user.value?.id;
+            ? `${apiurl}/clients/search?name=${searchClient.value}`
+            : `${apiurl}/clients?authsId=` + user.value?.id; 
         
         const { data } = await useFetch<Client[]>(url, {
             method: 'GET',

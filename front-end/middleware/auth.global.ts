@@ -7,11 +7,12 @@ export default defineNuxtRouteMiddleware(async(to, from) => {
     if(import.meta.server) return 
 
     const { setUser, clearUser, user } = useAuthUser()
+    const apiurl = useRuntimeConfig().public.apiUrl
 
     if(user.value === undefined) return navigateTo('/auth/login')
     
     try {
-        const data = await $fetch<User>('http://localhost:3001/auth/cookie', {
+        const data = await $fetch<User>(`${apiurl}/auth/cookie`, { 
             method: 'GET',
             credentials: 'include',
         })

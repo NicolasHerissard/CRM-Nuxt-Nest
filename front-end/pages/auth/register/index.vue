@@ -13,7 +13,8 @@ const error = ref('')
 
 const register = async () => {
   try {
-    const user = await $fetch<User>('http://localhost:3001/auth/register', {
+    const apiurl = useRuntimeConfig().public.apiUrl
+    const user = await $fetch<User>(`${apiurl}/auth/register`, {
       method: 'POST',
       body: {
         username: username.value,

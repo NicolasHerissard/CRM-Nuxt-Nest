@@ -29,6 +29,8 @@ services:
       context: ./front-end
     ports:
       - "3000:3000"
+    environment:
+      - NUXT_API_URL=http://nest:3001
     depends_on:
       - nest
 
@@ -37,6 +39,12 @@ services:
       context: ./back-end
     ports:
       - "3001:3001"
+    environment:
+      - DATABASE_HOST=mysql
+      - DATABASE_PORT=3306
+      - DATABASE_USER=crm
+      - DATABASE_PASSWORD=crm
+      - DATABASE_NAME=crm
     depends_on:
       - mysql
 

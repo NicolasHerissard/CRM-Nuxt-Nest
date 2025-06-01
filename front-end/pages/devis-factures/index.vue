@@ -5,6 +5,7 @@ import { ref, reactive, onMounted } from 'vue'
 const clients = ref<Client[]>([])
 const articles = ref<Article[]>([])
 let confirmErrorMSG = ref('')
+const apiurl = useRuntimeConfig().public.apiUrl
 
 const form = reactive({
   clientId: 0,
@@ -17,8 +18,8 @@ const form = reactive({
 })
 
 onMounted(async () => {
-  clients.value = await $fetch<Client[]>('http://localhost:3001/clients')
-  articles.value = await $fetch<Article[]>('http://localhost:3001/articles')
+  clients.value = await $fetch<Client[]>(`${apiurl}/clients`)
+  articles.value = await $fetch<Article[]>(`${apiurl}/articles`)
 })
 
 async function addClientArticle() {
@@ -38,7 +39,7 @@ async function addClientArticle() {
   }
 
   try {
-    const response = await $fetch('http://localhost:3001/articles-clients', {
+    const response = await $fetch(`${apiurl}/articles-clients`, {
       method: 'POST',
       body: payload,
     })
