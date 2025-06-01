@@ -14,15 +14,15 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'mysql',
       port: 3306,
-      username: 'admin',
-      password: 'admin',
+      username: 'crm',
+      password: 'crm',
       database: 'crm',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging: true,
-      
+      autoLoadEntities: true,
     }),
     ClientsModule,
     ArticlesModule,

@@ -1,0 +1,21 @@
+# Ne pas copier les dépendances locales
+node_modules
+
+# Dossiers de build locaux
+dist
+build
+.nuxt
+.output
+
+# Configuration et métadonnées VCS
+.git
+.gitignore
+
+# Fichiers de configuration Docker locaux
+Dockerfile
+docker-compose.yml
+
+# Logs et fichiers temporaires
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
