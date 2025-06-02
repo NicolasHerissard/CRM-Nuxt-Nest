@@ -10,19 +10,11 @@ const email = ref('')
 const password = ref('')
 const username = ref('')
 const error = ref('')
+const { Handleregister } = useAuth() // Appel de la fonction useAuth pour récupérer les composants utilisés
 
 const register = async () => {
-  try {
-    const apiurl = useRuntimeConfig().public.apiUrl
-    const user = await $fetch<User>(`${apiurl}/auth/register`, {
-      method: 'POST',
-      body: {
-        username: username.value,
-        password: password.value,
-        email: email.value,
-      },
-      credentials: 'include',
-    })
+  try {    
+    await Handleregister(username.value, password.value, email.value) // Appel de la fonction Handleregister avec les paramètres de l'utilisateur
 
     navigateTo('/login')
   }

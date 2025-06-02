@@ -38,6 +38,7 @@ export interface User {
   username: string;
   password: string;
   email: string;
+  role: number;
   created_at?: Date;
   updated_at?: Date;
 }

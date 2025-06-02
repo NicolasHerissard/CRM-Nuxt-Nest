@@ -2,11 +2,14 @@
 import { ref } from 'vue'
 import type { Article } from '~/models'
 
-const { data: articles } = await useFetch<Article[]>('http://localhost:3001/articles')
-
 const showForm = ref(false)
 const editedArticle = ref<Article>()
 const searchArticle = ref('')
+const { articles, FetchArticles, HandleAddArticle, HandleDeleteArticle, HandleUpdateArticle } = useArticles()
+
+onMounted(() => {
+  FetchArticles()
+})
 
 const formArticle = ref<Article>({
   id: 0,
@@ -21,15 +24,9 @@ async function AddArticle() {
 
   formArticle.value.priceTTC = formArticle.value.priceHT * (1 + formArticle.value.tva / 100)
 
-  const { data } = await useFetch('http://localhost:3001/articles', {
-    method: 'POST',
-    body: formArticle.value,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    }
-  })
+  await HandleAddArticle(formArticle)
 
-  await refreshNuxtData()
+  FetchArticles()
   cancelEdit()
 }
 
@@ -65,27 +62,17 @@ async function HandleSearchArticles() {
 }
 
 async function DeleteArticle(id: number) {
-  const { data } = await useFetch(`http://localhost:3001/articles/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    }
-  })
+  await HandleDeleteArticle(id)
 
-  await refreshNuxtData()
+  FetchArticles()
 }
 
 async function UpdateArticle(id: number) {
   formArticle.value.priceTTC = formArticle.value.priceHT * (1 + formArticle.value.tva / 100)
-  await useFetch(`http://localhost:3001/articles/${id}`, {
-    method: 'PUT',
-    body: formArticle.value,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    }
-  })
+  
+  await HandleUpdateArticle(id, formArticle)
 
-  await refreshNuxtData()
+  FetchArticles()
   cancelEdit()
 }
 

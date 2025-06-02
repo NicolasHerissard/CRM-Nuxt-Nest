@@ -4,6 +4,7 @@ import type { Client } from '~/models';
 import { useAuthUser } from "#imports";
 
 const { user } = useAuthUser();
+const { HandleAddClient, FetchClients } = useClients()
 
 onMounted(() => {
     const btnClose = document.querySelector('.btn-close');
@@ -27,17 +28,9 @@ const formClient = ref<Client>({
 
 async function AddClient() {
     try {
-        const { data } = await useFetch('http://localhost:3001/clients/create', {
-            method: 'POST',
-            body: formClient.value,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            }
-        });
+        await HandleAddClient(formClient)
 
-        console.log('Client added:', data.value);
-
-        await refreshNuxtData();
+        await FetchClients()
     }
     catch (error) {
         console.error('Error adding client:', error);

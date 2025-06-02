@@ -3,17 +3,18 @@
     import { onMounted } from 'vue';
     import type { Client } from '~/models';
     import { useAuthUser } from "#imports";
+    import { useClients } from '~/composables/useClients';
     
-    const { user } = useAuthUser();
-    const apiurl = useRuntimeConfig().public.apiUrl
-    console.log(user.value?.id)
-    const { data: clients } = await useFetch<Client[]>(`${apiurl}/clients?authsId=` + user.value?.id, {
-        method: 'GET',
-    });
+    const { user } = useAuthUser(); // Donne l'utilisateur authentifié
+    const apiurl = useRuntimeConfig().public.apiUrl // URL de l'API
 
-    const { data: countClients } = await useFetch<number>(`${apiurl}/clients/count?authsId=` + user.value?.id, {
-        method: 'GET',
-    });
+    // Composants utilisés pour récupérer les clients et le nombre de clients
+    const { clients, countClient: countClients, FetchClients, GetCountClient } = useClients()
+
+    onMounted(() => {
+        GetCountClient()
+        FetchClients()
+    })
 
     onMounted(() => {
         const sidebarClients = document.querySelector('.sidebar-clients');

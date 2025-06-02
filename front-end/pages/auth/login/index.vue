@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { User } from '~/models'
 import { useAuthUser } from "#imports"
+import { useAuth } from '~/composables/useAuth'
 
 definePageMeta({
   layout: 'auth',
@@ -10,24 +10,18 @@ definePageMeta({
 const username = ref('')
 const password = ref('')
 const error = ref('')
+const toast = useToast()
 
 const { setUser } = useAuthUser()
+const { Handlelogin, user } = useAuth() // Appel de la fonction useAuth pour récupérer les composants utilisés
 
 async function login() {
-    try {
-        const apiurl = useRuntimeConfig().public.apiUrl
-        const user = await $fetch<User>(`${apiurl}/auth/login`, {
-            method: 'POST',
-            body: {
-                username: username.value,
-                password: password.value
-            },
-            credentials: 'include',
-        })
+    try {        
+        await Handlelogin(username.value, password.value) // Appel de la fonction Handlelogin avec les paramètres de l'utilisateur
 
-        if(user) {
+        if(user.value) {
             // Redirection après connexion réussie
-            setUser(user)
+            setUser(user.value)
             navigateTo('/')
         } else {
             // Gérer l'erreur de connexion
@@ -38,12 +32,13 @@ async function login() {
         }
     }
     catch (err: any) {
-      error.value = err.message
+      error.value = err.message // Gestion de l'erreur de connexion
       setTimeout(() => {
         error.value = ''
       }, 3000)
     }
 }
+
 </script>
 
 <template>
@@ -102,7 +97,3 @@ async function login() {
     <p class="mt-4 text-red-600 text-center">{{ error }}</p>
   </div>
 </template>
-
-function definePageMeta(arg0: { layout: string }) {
-  throw new Error('Function not implemented.')
-}

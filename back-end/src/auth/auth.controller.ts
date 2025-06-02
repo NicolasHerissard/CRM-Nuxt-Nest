@@ -51,4 +51,11 @@ export class AuthController {
 
         return req.user
     }
+
+    @Post('logout')
+    @UseGuards(JwtAuthGuard)
+    async logout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+        res.clearCookie('auth_token')
+        return req.user
+    }
 }

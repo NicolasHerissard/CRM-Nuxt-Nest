@@ -29,5 +29,9 @@ export default defineNuxtConfig({
     ]
   },
   css: ['@/assets/css/main.css'],
-  
+  modules: ['@nuxtjs/color-mode', '@nuxt/ui'],
+  colorMode: {
+    preference: 'system',
+    classSuffix: '',
+  }
 })
