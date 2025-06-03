@@ -10,8 +10,7 @@ definePageMeta({
 const username = ref('')
 const password = ref('')
 const error = ref('')
-const toast = useToast()
-
+const visible = ref(false)
 const { setUser } = useAuthUser()
 const { Handlelogin, user } = useAuth() // Appel de la fonction useAuth pour récupérer les composants utilisés
 
@@ -26,17 +25,20 @@ async function login() {
         } else {
             // Gérer l'erreur de connexion
             error.value = 'Nom d\'utilisateur ou mot de passe incorrect'
-            setTimeout(() => {
-                error.value = ''
-            }, 3000)
+            showNotification()
         }
     }
     catch (err: any) {
       error.value = err.message // Gestion de l'erreur de connexion
-      setTimeout(() => {
-        error.value = ''
-      }, 3000)
+      showNotification()
     }
+}
+
+function showNotification() {
+  visible.value = true
+  setTimeout(() => {
+    visible.value = false
+  }, 3000)
 }
 
 </script>
@@ -94,6 +96,11 @@ async function login() {
         >Inscription</NuxtLink
       >
     </p>
-    <p class="mt-4 text-red-600 text-center">{{ error }}</p>
+  </div>
+  <div
+      v-if="visible"
+      class="fixed bottom-4 right-4 bg-green-100 text-green-900 px-4 py-3 rounded shadow transition-opacity"
+    >
+      {{ error }}
   </div>
 </template>
