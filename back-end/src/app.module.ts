@@ -10,6 +10,7 @@ import { ArticlesClientsModule } from './articles-clients/articles-clients.modul
 import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { HistoriqueConnexionModule } from './historique-connexion/historique-connexion.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ConfigModule } from '@nestjs/config';
     ArticlesClientsModule,
     AppointmentsModule,
     AuthModule,
+    HistoriqueConnexionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

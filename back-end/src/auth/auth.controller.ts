@@ -34,7 +34,7 @@ export class AuthController {
             secure: true,
         })
 
-        return { message: 'Login successful', user };
+        return { user };
     }
 
     @Get('cookie')

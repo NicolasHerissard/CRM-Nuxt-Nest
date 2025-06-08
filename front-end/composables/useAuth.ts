@@ -3,8 +3,7 @@ import type { User } from "~/models"
 export function useAuth() {
     
     const apiurl = useRuntimeConfig().public.apiUrl
-    const { setUser, clearUser } = useAuthUser()
-    const user = ref<User | null>(null)
+    const { setUser, clearUser, user } = useAuthUser()
 
     async function Handleregister(username: string, password: string, email: string) {
         await $fetch<User>(`${apiurl}/auth/register`, {
@@ -19,7 +18,7 @@ export function useAuth() {
     }
 
     async function Handlelogin(username: string, password: string) {
-        user.value = await $fetch<User>(`${apiurl}/auth/login`, {
+        const userData = await $fetch<{ user: User }>(`${apiurl}/auth/login`, {
             method: 'POST',
             body: {
                 username: username,
@@ -28,7 +27,8 @@ export function useAuth() {
             credentials: 'include',
         })
 
-        setUser(user.value)
+        setUser(userData.user)
+        return userData.user
     }
 
     async function logout() {

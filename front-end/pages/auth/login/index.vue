@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useAuthUser } from "#imports"
 import { useAuth } from '~/composables/useAuth'
+import type { HistoryConnexion, User } from '~/models'
 
 definePageMeta({
   layout: 'auth',
@@ -11,16 +12,26 @@ const username = ref('')
 const password = ref('')
 const error = ref('')
 const visible = ref(false)
-const { setUser } = useAuthUser()
-const { Handlelogin, user } = useAuth() // Appel de la fonction useAuth pour récupérer les composants utilisés
+const { getDeviceType, getOS, getBrowser, getIP } = usePlatform()
+const { Handlelogin } = useAuth() // Appel de la fonction useAuth pour récupérer les composants utilisés
+const { postHistory } = useAuthHistory()
 
 async function login() {
-    try {        
-        await Handlelogin(username.value, password.value) // Appel de la fonction Handlelogin avec les paramètres de l'utilisateur
+    try {
+        const userData: User = await Handlelogin(username.value, password.value) // Appel de la fonction Handlelogin avec les paramètres de l'utilisateur
 
-        if(user.value) {
-            // Redirection après connexion réussie
-            setUser(user.value)
+        if(userData) {
+            const formHistory = ref<HistoryConnexion>({
+            authId: userData.id,
+            date: new Date(),
+            ip_address: await getIP(),
+            userAgent: navigator.userAgent,
+            device: getDeviceType(navigator.userAgent),
+            os: getOS(navigator.userAgent),
+            browser: getBrowser(navigator.userAgent),
+            })
+
+            await postHistory(formHistory.value)
             navigateTo('/')
         } else {
             // Gérer l'erreur de connexion

@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Clients } from 'src/clients/clients.entity';
+import { HistoriqueConnexion } from 'src/historique-connexion/historique-connexion.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
@@ -27,4 +28,7 @@ export class Auth {
 
     @OneToMany(() => Clients, (clients) => clients.auths)
     client: Clients[];
+
+    @OneToMany(() => HistoriqueConnexion, (historiqueConnexion) => historiqueConnexion.auth)
+    historiqueConnexions: HistoriqueConnexion[];
 }

@@ -42,3 +42,14 @@ export interface User {
   created_at?: Date;
   updated_at?: Date;
 }
+
+export interface HistoryConnexion {
+  id?: number;
+  authId?: number;
+  date: Date;
+  ip_address?: string;
+  userAgent?: string;
+  device?: string;
+  os?: string;
+  browser?: string;
+}
