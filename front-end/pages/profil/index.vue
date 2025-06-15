@@ -6,8 +6,9 @@ definePageMeta({
 
 const { user } = useAuthUser()
 const role = ref<string>('')
-const { GetCountConnexions, countConnexions } = useProfil()
+const { countConnexions, GetCountConnexions } = useProfil()
 const { countClient, GetCountClient } = useClients()
+const { logout } = useAuth()
 
 switch(user.value?.role) {
     case 0:
@@ -96,7 +97,7 @@ onMounted(() => {
 
         <!-- Actions rapides -->
         <div class="bg-gray-50 p-4 rounded-xl shadow-sm md:col-span-2 flex flex-col md:flex-row justify-between items-center gap-4">
-          <UButton icon="i-heroicons-arrow-right-on-rectangle" label="Se déconnecter" />
+          <UButton icon="i-heroicons-arrow-right-on-rectangle" label="Se déconnecter" @click="logout"/>
         </div>
       </div>
     </div>

@@ -2,7 +2,8 @@
 import { Appointments } from 'src/appointments/appointments.entity';
 import { ArticlesClients } from 'src/articles-clients/articles-clients.entity';
 import { Auth } from 'src/auth/auth.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Devis } from 'src/devis/devis.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, OneToOne } from 'typeorm';
 
 @Entity()
 export class Clients {
@@ -52,4 +53,7 @@ export class Clients {
 
   @ManyToOne(() => Auth, (auth) => auth.client)
   auths: Auth;
+
+  @OneToOne(() => Devis, (devis) => devis.client)
+  devis: Devis;
 }

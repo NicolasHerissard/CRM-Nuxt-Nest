@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule } from './clients/clients.module';
@@ -11,6 +11,10 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { HistoriqueConnexionModule } from './historique-connexion/historique-connexion.module';
+import { FacturesModule } from './factures/factures.module';
+import { DevisModule } from './devis/devis.module';
+import { DevisItemsModule } from './devis-items/devis-items.module';
+import { RateLimitMiddleware } from './rate-limit/rate-limit.middleware';
 
 @Module({
   imports: [
@@ -33,12 +37,21 @@ import { HistoriqueConnexionModule } from './historique-connexion/historique-con
     AppointmentsModule,
     AuthModule,
     HistoriqueConnexionModule,
+    FacturesModule,
+    DevisModule,
+    DevisItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   constructor(
     private dataSource: DataSource
   ) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RateLimitMiddleware)
+      .forRoutes('*');
+  }
 }

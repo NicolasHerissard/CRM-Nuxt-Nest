@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Clients } from 'src/clients/clients.entity';
+import { Devis } from 'src/devis/devis.entity';
 import { HistoriqueConnexion } from 'src/historique-connexion/historique-connexion.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 
 @Entity()
 export class Auth {
@@ -31,4 +32,7 @@ export class Auth {
 
     @OneToMany(() => HistoriqueConnexion, (historiqueConnexion) => historiqueConnexion.auth)
     historiqueConnexions: HistoriqueConnexion[];
+
+    @OneToOne(() => Devis, (devis) => devis.auth)
+    devis: Devis;
 }
